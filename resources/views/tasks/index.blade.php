@@ -8,6 +8,7 @@
                 <div class="panel-heading">{{trans('tasks.index.page_name')}}</div>
 
                 <div class="panel-body">
+                    <a href="{{route('tasks.create')}}" class="btn btn-success"><i class="fa fa-plus">Create new task</i></a>
                     <table class="table table-striped task-table">
                         <thead>
                             <tr>
@@ -28,6 +29,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <a href="{{route('tasks.create')}}" class="btn btn-success"><i class="fa fa-plus">Create new task</i></a>
                 </div>
             </div>
         </div>
