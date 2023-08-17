@@ -98,8 +98,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $tasks)
     {
-        //
+		$this->authorize('isAuthor', $tasks);
+        $tasks->delete();
+		return redirect()->route('tasks.index');
     }
 }
