@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -10,8 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-	public function __construct(){
+	private $tasks;
+
+	public function __construct(TaskRepository $tasks){
 		$this->middleware('auth');
+		$this->tasks = $tasks;
 	}
 
     /**
@@ -23,7 +27,7 @@ class TaskController extends Controller
     {
         $tasks = Task::all();
 		return view('tasks.index', [
-			'tasks' => $tasks,
+			'tasks' => $this->tasks->forUser(Auth::user()),
 		]);
     }
 
