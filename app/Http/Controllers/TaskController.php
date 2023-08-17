@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Repositories\TaskRepository;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\TaskRequest;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +25,6 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
 		return view('tasks.index', [
 			'tasks' => $this->tasks->forUser(Auth::user()),
 		]);
@@ -44,14 +43,11 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  TaskRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        $this->validate($request, [
-			'name' => 'required|max:5'
-        ]);
 		$user = Auth::user();
 		$user->tasks()->create(
 			[
@@ -60,17 +56,6 @@ class TaskController extends Controller
 		);
 
 		return redirect(route('tasks.index'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
